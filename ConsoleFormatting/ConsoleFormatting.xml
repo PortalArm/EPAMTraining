@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ConsoleFormatting</name>
+    </assembly>
+    <members>
+        <member name="M:ConsoleFormatting.Program.Main(System.String[])">
+            <summary>
+            Программа, выполняющая форматирование координат
+            </summary>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>
