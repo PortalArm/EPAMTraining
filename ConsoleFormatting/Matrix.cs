@@ -18,11 +18,18 @@ namespace ConsoleFormatting
         private readonly int _rand = 32;
 
         /// <summary>
+        /// Instance of Random class used to generate numbers
+        /// </summary>
+        static private readonly Random _rnd = new Random();
+
+        /// <summary>
         /// Variable for storing the matrix itself.
         /// </summary>
         private double[,] val;
 
+        public int Rows { get => val.GetLength(0); }
 
+        public int Cols { get => val.GetLength(1); }
 
         /// <summary>
         /// Indexer for easy access to the matrix.
@@ -30,7 +37,7 @@ namespace ConsoleFormatting
         /// <param name="i">Row index</param>
         /// <param name="j">Column index</param>
         /// <returns></returns>
-        public double this[int i,int j]
+        public double this[int i, int j]
         {
             get { return val[i, j]; }
             set { val[i, j] = value; }
@@ -47,11 +54,14 @@ namespace ConsoleFormatting
         }
 
         /// <summary>
-        /// Fills the matrix with random values in range [-_rand, _rand)
+        /// Fills the matrix with random numbers in range [-_rand, _rand)
         /// </summary>
         public void FillRandom()
         {
-            
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Cols; ++j)
+                    val[i, j] = (2 * _rnd.NextDouble() - 1) * _rand;
+
         }
 
         /// <summary>
@@ -59,7 +69,12 @@ namespace ConsoleFormatting
         /// </summary>
         public void Print()
         {
-
+            for (int i = 0; i < Rows; ++i)
+            {
+                for (int j = 0; j < Cols; ++j)
+                    Console.Write("{0,7} ", val[i, j]);
+                Console.WriteLine();
+            }
         }
 
         /// <summary>
@@ -72,7 +87,7 @@ namespace ConsoleFormatting
         {
             return null;
 
-            
+
         }
 
         /// <summary>
@@ -87,7 +102,7 @@ namespace ConsoleFormatting
         }
 
         /// <summary>
-        /// Overloaded operator for matrices addition.
+        /// Overloaded operator for matrix addition.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -98,7 +113,7 @@ namespace ConsoleFormatting
         }
 
         /// <summary>
-        /// Overloaded operator for matrices multiplication.
+        /// Overloaded operator for matrix multiplication.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
