@@ -4,9 +4,86 @@
         <name>ConsoleFormatting</name>
     </assembly>
     <members>
+        <member name="T:ConsoleFormatting.Matrix">
+            <summary>
+            This class implements two-dimensional matrix.
+            </summary>
+        </member>
+        <member name="F:ConsoleFormatting.Matrix._rand">
+            <summary>
+            Describes the random numbers boundaries.
+            </summary>
+        </member>
+        <member name="F:ConsoleFormatting.Matrix._rnd">
+            <summary>
+            Instance of Random class used to generate numbers
+            </summary>
+        </member>
+        <member name="F:ConsoleFormatting.Matrix.val">
+            <summary>
+            Variable for storing the matrix itself.
+            </summary>
+        </member>
+        <member name="P:ConsoleFormatting.Matrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Indexer for easy access to the matrix.
+            </summary>
+            <param name="i">Row index</param>
+            <param name="j">Column index</param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates n x m matrix.
+            </summary>
+            <param name="n">Rows count</param>
+            <param name="m">Columns count</param>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.FillRandom">
+            <summary>
+            Fills the matrix with random numbers in range [-_rand, _rand)
+            </summary>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.Print">
+            <summary>
+            Prints the matrix to console output.
+            </summary>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.Add(ConsoleFormatting.Matrix,ConsoleFormatting.Matrix)">
+            <summary>
+            Adds two matrices.
+            </summary>
+            <param name="a">First matrix</param>
+            <param name="b">Second matrix</param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.Multiply(ConsoleFormatting.Matrix,ConsoleFormatting.Matrix)">
+            <summary>
+            Multiplies two matrices.
+            </summary>
+            <param name="a">First matrix</param>
+            <param name="b">Second matrix</param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.op_Addition(ConsoleFormatting.Matrix,ConsoleFormatting.Matrix)">
+            <summary>
+            Overloaded operator for matrix addition.
+            </summary>
+            <param name="left">Left operand</param>
+            <param name="right">Right operand</param>
+            <returns></returns>
+        </member>
+        <member name="M:ConsoleFormatting.Matrix.op_Multiply(ConsoleFormatting.Matrix,ConsoleFormatting.Matrix)">
+            <summary>
+            Overloaded operator for matrix multiplication.
+            </summary>
+            <param name="left">Left operand</param>
+            <param name="right">Right operand</param>
+            <returns></returns>
+        </member>
         <member name="M:ConsoleFormatting.Program.Main(System.String[])">
             <summary>
-            Программа, выполняющая форматирование координат
+            Программа, выполняющая форматирование координат и реализующая класс "Матрица"
             </summary>
             <param name="args"></param>
         </member>

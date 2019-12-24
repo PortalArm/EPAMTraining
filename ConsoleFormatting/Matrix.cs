@@ -27,8 +27,14 @@ namespace ConsoleFormatting
         /// </summary>
         private double[,] val;
 
+        /// <summary>
+        /// Represents the number of rows
+        /// </summary>
         public int Rows { get => val.GetLength(0); }
 
+        /// <summary>
+        /// Represents the number of columns
+        /// </summary>
         public int Cols { get => val.GetLength(1); }
 
         /// <summary>
@@ -60,7 +66,8 @@ namespace ConsoleFormatting
         {
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Cols; ++j)
-                    val[i, j] = (2 * _rnd.NextDouble() - 1) * _rand;
+                    val[i, j] =  (2 * _rnd.NextDouble() - 1) * _rand;
+                    //val[i, j] = _rnd.Next(-_rand, _rand);
 
         }
 
@@ -72,7 +79,7 @@ namespace ConsoleFormatting
             for (int i = 0; i < Rows; ++i)
             {
                 for (int j = 0; j < Cols; ++j)
-                    Console.Write("{0,7} ", val[i, j]);
+                    Console.Write("{0,9} ", val[i, j].ToString("0.0000"));
                 Console.WriteLine();
             }
         }
@@ -83,12 +90,7 @@ namespace ConsoleFormatting
         /// <param name="a">First matrix</param>
         /// <param name="b">Second matrix</param>
         /// <returns></returns>
-        static public Matrix Add(Matrix a, Matrix b)
-        {
-            return null;
-
-
-        }
+        static public Matrix Add(Matrix a, Matrix b) => a + b;
 
         /// <summary>
         /// Multiplies two matrices.
@@ -96,10 +98,7 @@ namespace ConsoleFormatting
         /// <param name="a">First matrix</param>
         /// <param name="b">Second matrix</param>
         /// <returns></returns>
-        static public Matrix Multiply(Matrix a, Matrix b)
-        {
-            return null;
-        }
+        static public Matrix Multiply(Matrix a, Matrix b) => a * b;
 
         /// <summary>
         /// Overloaded operator for matrix addition.
@@ -109,7 +108,14 @@ namespace ConsoleFormatting
         /// <returns></returns>
         static public Matrix operator +(Matrix left, Matrix right)
         {
-            return null;
+            if (left.Rows != right.Rows || left.Cols != right.Cols)
+                throw new InvalidOperationException("Размерности матриц должны совпадать");
+
+            Matrix result = new Matrix(left.Rows, left.Cols);
+            for (int i = 0; i < left.Rows; ++i)
+                for (int j = 0; j < left.Cols; ++j)
+                    result[i, j] = left[i, j] + right[i, j];
+            return result;
         }
 
         /// <summary>
@@ -120,7 +126,17 @@ namespace ConsoleFormatting
         /// <returns></returns>
         static public Matrix operator *(Matrix left, Matrix right)
         {
-            return null;
+            if (left.Cols != right.Rows)
+                throw new InvalidOperationException("Количество столбцов первой матрицы должно равняться количеству строк второй матрицы");
+
+            Matrix result = new Matrix(left.Rows, right.Cols);
+
+            for (int i = 0; i < left.Rows; ++i)
+                for (int j = 0; j < right.Cols; ++j)
+                    for (int z = 0; z < left.Cols; ++z)
+                        result[i, j] += left[i, z] * right[z, j];
+
+            return result;
         }
 
 
