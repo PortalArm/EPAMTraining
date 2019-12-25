@@ -56,6 +56,9 @@ namespace ConsoleFormatting
         /// <param name="m">Columns count</param>
         public Matrix(int n, int m)
         {
+            if (n < 1 || m < 1)
+                throw new ArgumentOutOfRangeException("n/m","Размерности должны быть больше нуля");
+
             val = new double[n, m];
         }
 
