@@ -24,6 +24,7 @@ namespace ConsoleFormatting
                 var decimalStringValues = inputString.Split(',').Select(w => decimal.Parse(w, inputCulture).ToString(outputCulture)).ToArray();
                 Console.WriteLine("X: {0} Y: {1}", decimalStringValues[0], decimalStringValues[1]);
             }
+
             #endregion
 
             #region Task2
@@ -37,7 +38,7 @@ namespace ConsoleFormatting
             (matr1 * matr2).Print();
 
             #endregion
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }

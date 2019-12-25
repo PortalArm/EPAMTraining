@@ -24,6 +24,16 @@
             Variable for storing the matrix itself.
             </summary>
         </member>
+        <member name="P:ConsoleFormatting.Matrix.Rows">
+            <summary>
+            Represents the number of rows
+            </summary>
+        </member>
+        <member name="P:ConsoleFormatting.Matrix.Cols">
+            <summary>
+            Represents the number of columns
+            </summary>
+        </member>
         <member name="P:ConsoleFormatting.Matrix.Item(System.Int32,System.Int32)">
             <summary>
             Indexer for easy access to the matrix.
