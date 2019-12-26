@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeworkTwo
 {
@@ -30,7 +27,6 @@ namespace HomeworkTwo
                 else
                     Console.WriteLine("Введены некорректные значения, попробуйте снова.");
             }
-
             Console.ReadLine();
         }
     }

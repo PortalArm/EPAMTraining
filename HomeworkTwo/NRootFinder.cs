@@ -85,7 +85,6 @@ namespace HomeworkTwo
         /// <returns></returns>
         public static Dictionary<string, double> CompareResults(double number, int inversePower, double eps = 0.0001)
         {
-            
             double newtonPow = FindRoot(number, inversePower, eps),
                 mathPow = Math.Pow(number, 1.0 / inversePower);
 
