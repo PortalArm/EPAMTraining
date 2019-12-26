@@ -7,12 +7,22 @@ namespace HomeworkTwo
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(NRootFinder.FindRoot(2, 2, 0));
+            //StringBuilder sb = new StringBuilder(string.Empty); 
+            //string w = string.Empty;
+            //GC.Collect();
+            //Console.WriteLine(GC.GetTotalMemory(false));
+            //for (int i = 0; i < 10000; ++i)
+            //w = "0" + w;
+            //sb.Insert(0,'0');
+            //Console.WriteLine(GC.GetTotalMemory(false));
+
             bool failedInput = true;
+            #region Task1
+
             while (failedInput)
             {
                 Console.WriteLine("Введите через пробел положительное число, положительную целочисленную степень корня и точность*. (* - опционально)");
-                var inputTokens = Console.ReadLine().Split();
+                var inputTokens = Console.ReadLine().Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
                 double eps = double.NaN;
                 if (double.TryParse(inputTokens[0], out double num) && int.TryParse(inputTokens[1], out int power) &&
                     (inputTokens.Length < 3 || double.TryParse(inputTokens[2], out eps)))
@@ -22,11 +32,30 @@ namespace HomeworkTwo
                     Console.WriteLine("Сравнение с методом Math.Pow:");
                     foreach (var kv in results)
                         Console.WriteLine(kv);
+
                     failedInput = false;
-                }
-                else
+                } else
                     Console.WriteLine("Введены некорректные значения, попробуйте снова.");
             }
+            #endregion
+
+            #region Task2
+            failedInput = true;
+
+            while (failedInput)
+            {
+                Console.WriteLine("Введите положительное целочисленное число, которое нужно перевести в двоичную систему.");
+                if (uint.TryParse(Console.ReadLine(), out uint result))
+                {
+                    BinaryUInt bu1 = new BinaryUInt(result), bu2 = new BinaryUInt(result, ConversionMethod.ImplementedMethod);
+                    Console.WriteLine($@"Число {result} в двоичной системе:
+Стандартный метод:  {bu1.BinaryValue}
+Свой метод:         {bu2.BinaryValue}");
+                    failedInput = false;
+                } else
+                    Console.WriteLine("Введено некорректное значение, попробуйте снова.");
+            }
+            #endregion
             Console.ReadLine();
         }
     }
