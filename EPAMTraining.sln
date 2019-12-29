@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFormatting", "Consol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeworkTwo", "HomeworkTwo\HomeworkTwo.csproj", "{864537F0-53DC-4FE6-9058-E8AFF2134483}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChristmasPresent", "ChristmasPresent\ChristmasPresent.csproj", "{8316EBC1-D3A8-43AC-8C37-676B7288B5F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{864537F0-53DC-4FE6-9058-E8AFF2134483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864537F0-53DC-4FE6-9058-E8AFF2134483}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864537F0-53DC-4FE6-9058-E8AFF2134483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8316EBC1-D3A8-43AC-8C37-676B7288B5F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8316EBC1-D3A8-43AC-8C37-676B7288B5F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8316EBC1-D3A8-43AC-8C37-676B7288B5F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8316EBC1-D3A8-43AC-8C37-676B7288B5F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
