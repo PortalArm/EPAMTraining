@@ -11,13 +11,16 @@ namespace ChristmasPresent
         private double _sugarWeight;
         public string Name { get; set; }
         public double Weight { get; set; }
-        public double SugarWeight { get => _sugarWeight;
-            set { 
-                if (value > Weight) 
-                    throw new ArgumentOutOfRangeException("sugarWeight",value,"Масса сахара должен быть не больше веса конфеты.");
-                
+        public double SugarWeight
+        {
+            get => _sugarWeight;
+            set
+            {
+                if (value > Weight)
+                    throw new ArgumentOutOfRangeException("sugarWeight", value, "Масса сахара должен быть не больше веса конфеты.");
+
                 _sugarWeight = value;
-            } 
+            }
         }
         public double SugarPercent { get => SugarWeight / Weight; }
         protected Candy(string name, double weight, double sugarWeight)
@@ -27,6 +30,6 @@ namespace ChristmasPresent
             SugarWeight = sugarWeight;
         }
         public abstract void Eat();
-        public override string ToString() => $"Масса: {Weight}, масса сахара: {SugarWeight}, доля сахара: {Math.Round(SugarPercent,4)}.";
+        public override string ToString() => $"Масса: {Weight}, масса сахара: {SugarWeight}, доля сахара: {Math.Round(SugarPercent, 4)}.";
     }
 }

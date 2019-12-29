@@ -20,7 +20,7 @@ namespace ChristmasPresent
         public void AddCandy(Candy candy) => Candies.Add(candy);
         public void AddCandies(params object[] candies)
         {
-            foreach(object candy in candies)
+            foreach (object candy in candies)
                 switch (candy)
                 {
                     case IEnumerable<Candy> manyCandies:

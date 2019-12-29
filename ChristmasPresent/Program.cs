@@ -20,7 +20,7 @@ namespace ChristmasPresent
                 new PlatedChocolateCandy("Плитка Один", 250, 170, 32),
                 new PlatedChocolateCandy("Плитка Два", 300, 190, 40),
             };
-            CaramelCandy caramCandy = new CaramelCandy("Карамелька1",23,13);
+            CaramelCandy caramCandy = new CaramelCandy("Карамелька1", 23, 13);
 
             var Present = new Present("Прикольный", caramCandy, chocolCandies, platedCandies);
             Console.WriteLine(Present);
