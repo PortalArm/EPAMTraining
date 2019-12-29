@@ -10,12 +10,22 @@ namespace ChristmasPresent
     {
         static void Main(string[] args)
         {
-            ChocolateCandy chocolCandy1 = new ChocolateCandy("Заяц", 150, 100),
-                chocolCandy2 = new ChocolateCandy("Дед", 200, 120);
-            var caramCandy = new CaramelCandy("Карамелька1",23,13);
+            ChocolateCandy[] chocolCandies = {
+                new ChocolateCandy("Заяц", 150, 100),
+                new ChocolateCandy("Дед", 200, 120)
+            };
+            PlatedChocolateCandy[] platedCandies = {
+                new PlatedChocolateCandy("Казахстан", 220, 120, 30),
+                new PlatedChocolateCandy("Россия", 200, 110, 28),
+                new PlatedChocolateCandy("Плитка Один", 250, 170, 32),
+                new PlatedChocolateCandy("Плитка Два", 300, 190, 40),
+            };
+            CaramelCandy caramCandy = new CaramelCandy("Карамелька1",23,13);
 
-            var Present = new Present("Прикольный", chocolCandy1, chocolCandy2, caramCandy);
+            var Present = new Present("Прикольный", caramCandy, chocolCandies, platedCandies);
             Console.WriteLine(Present);
+
+            //Отсортировать по 
             Present.Sort(w => w.SugarPercent);
             Console.WriteLine(Present);
 
