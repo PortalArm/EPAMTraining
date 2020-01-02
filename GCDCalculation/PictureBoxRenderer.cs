@@ -17,7 +17,8 @@ namespace GCDCalculation
         //private PictureBox _pictureBox;
         private Chart _chart;
         private Form _underlyingForm = new Form() {
-             Width = _width, Height = _height
+            Width = _width,
+            Height = _height
         };
 
         public PictureBoxRenderer()
@@ -29,11 +30,11 @@ namespace GCDCalculation
             _chart = new Chart() {
                 Location = new System.Drawing.Point(0, 0),
                 //Size = new System.Drawing.Size(_width, _height),
-                ClientSize = new System.Drawing.Size(_width, _height-50),
+                ClientSize = new System.Drawing.Size(_width, _height - 50),
                 Parent = _underlyingForm,
                 Visible = true,
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
-                
+
             };
 
             _chart.ChartAreas.Add(new ChartArea());
@@ -55,7 +56,7 @@ namespace GCDCalculation
                     _chart.ChartAreas[0].AxisY.Enabled = AxisEnabled.False;
                     chartType = SeriesChartType.Column;
                     break;
-                    
+
             }
 
             _chart.Series[0].ChartType = _chart.Series[1].ChartType = chartType;

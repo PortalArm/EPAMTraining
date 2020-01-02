@@ -13,7 +13,7 @@ namespace GCDCalculation
         //[STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine(GCDHelper.GCD(5, 5));
+            Console.WriteLine(GCDHelper.GCD(5, 8));
             var renderer = new PictureBoxRenderer();
             renderer.SetDataLegend("GCD", "Efficient GCD");
             renderer.Render(TimeSpan.FromMilliseconds(5235), TimeSpan.FromMilliseconds(2313), Orientation.Vertical);

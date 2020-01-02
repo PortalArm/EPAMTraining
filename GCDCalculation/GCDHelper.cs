@@ -29,27 +29,61 @@ namespace GCDCalculation
             return a;
         }
 
+        public static long EfficientGCD(long a, long b)
+        {
+            if (a < 0 || b < 0)
+                throw new ArgumentOutOfRangeException();
+
+            int shift = 0;
+            if (a == 0)
+                return b;
+
+            if (b == 0)
+                return a;
+            while (((a | b) & 1) == 0)
+            {
+                shift++;
+                a >>= 1;
+                b >>= 1;
+            }
+
+            while ((a & 1) == 0)
+                a >>= 1;
+
+            do
+            {
+                while ((b & 1) == 0)
+                    b >>= 1;
+                if (a > b)
+                    (a, b) = (b, a);
+
+                b -= a;
+            } while (b != 0);
+            return a << shift;
+        }
+
+        public static long GCD(params long[] values) => CalculateAll(GCD, values);
+        public static long EfficientGCD(params long[] values) => CalculateAll(EfficientGCD, values);
         /// <summary>
         /// Вычисление НОД для произвольного количества чисел
         /// </summary>
         /// <param name="values">Список чисел</param>
         /// <returns>НОД чисел</returns>
-        public static long GCD(params long[] values)
+        private static long CalculateAll(Func<long, long, long> func, params long[] values)
         {
             if (values.Length <= 1)
                 throw new InvalidOperationException("Количество параметров должно быть больше одного.");
 
             long result = values[0];
             for (int i = 1; i < values.Length; ++i)
-                result = GCD(result, values[i]);
+                result = func(result, values[i]);
 
             return result;
         }
 
-        public static long EfficientGCD()
-        {
-            return 0;
-        }
+
+
+
 
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GCDCalculation
 {
-    public enum Orientation {Vertical, Horizontal }
+    public enum Orientation { Vertical, Horizontal }
 
     public interface IRenderer
     {
