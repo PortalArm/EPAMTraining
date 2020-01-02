@@ -18,16 +18,37 @@ namespace GCDCalculation
         /// <param name="a">Первое число</param>
         /// <param name="b">Второе число</param>
         /// <returns>НОД двух чисел</returns>
-        public static long GCD(long a,long b)
+        public static long GCD(long a, long b)
         {
-            while(b != 0)
+            if (a < 0 || b < 0)
+                throw new ArgumentOutOfRangeException();
+
+            while (b != 0)
                 (a, b) = (b, a % b);
 
             return a;
         }
+
+        /// <summary>
+        /// Вычисление НОД для произвольного количества чисел
+        /// </summary>
+        /// <param name="values">Список чисел</param>
+        /// <returns>НОД чисел</returns>
         public static long GCD(params long[] values)
         {
+            if (values.Length <= 1)
+                throw new InvalidOperationException("Количество параметров должно быть больше одного.");
 
+            long result = values[0];
+            for (int i = 1; i < values.Length; ++i)
+                result = GCD(result, values[i]);
+
+            return result;
+        }
+
+        public static long EfficientGCD()
+        {
+            return 0;
         }
 
     }
