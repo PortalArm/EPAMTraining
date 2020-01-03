@@ -150,7 +150,7 @@ namespace GCDCalculation
                     helper = GCD;
                     break;
             }
-            _stopwatch.Start();            
+            _stopwatch.Start();
             for (int i = 0; i < batchSize; ++i)
                 _ = helper(values[i]);
             _stopwatch.Stop();

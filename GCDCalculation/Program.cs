@@ -16,7 +16,6 @@ namespace GCDCalculation
 
             Console.WriteLine($"НОД чисел {a} и {b} методом Евклида: {GCDHelper.GCD(a,b)}");
             Console.WriteLine($"НОД чисел {a} и {b} методом Стейна: {GCDHelper.BinaryGCD(a,b)}");
-            //Console.WriteLine(GCDHelper.GCD(5, 8));
             int batch = 2048, 
                 argCount = 2,
                 randMax = 2 << 7;
@@ -34,7 +33,6 @@ namespace GCDCalculation
             Console.ReadKey();
             renderer.TerminateThread();
         }
-
         static (uint, uint) ProcessInput(string welcomeString)
         {
             Console.WriteLine(welcomeString);
