@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCDCalculation", "GCDCalculation\GCDCalculation.csproj", "{139D530F-B454-474E-B55E-785CB5D3E064}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{B6E27141-4C16-4B80-A1D0-825753B5E2BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5833B63B-072D-40CF-92DF-5E779BFB80C7} = {B6E27141-4C16-4B80-A1D0-825753B5E2BD}
+		{864537F0-53DC-4FE6-9058-E8AFF2134483} = {B6E27141-4C16-4B80-A1D0-825753B5E2BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD1793C6-70EE-4302-BBDD-C240D0C63560}
