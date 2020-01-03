@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="GCDHelper.cs" />
     <Compile Include="IRenderer.cs" />
-    <Compile Include="PictureBoxRenderer.cs" />
+    <Compile Include="ChartRenderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

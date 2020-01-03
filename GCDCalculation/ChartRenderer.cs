@@ -9,19 +9,18 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GCDCalculation
 {
-    class PictureBoxRenderer : IRenderer
+    class ChartRenderer : IRenderer
     {
 
-        private static int _width = 300, _height = 300;
+        private const int _width = 300, _height = 300, _verticalMargin = 40;
         private Thread _backgroundThread;
-        //private PictureBox _pictureBox;
         private Chart _chart;
         private Form _underlyingForm = new Form() {
             Width = _width,
             Height = _height
         };
 
-        public PictureBoxRenderer()
+        public ChartRenderer()
         {
             _backgroundThread = new Thread(() => Application.Run(_underlyingForm)) {
                 IsBackground = true,
@@ -29,8 +28,7 @@ namespace GCDCalculation
             };
             _chart = new Chart() {
                 Location = new System.Drawing.Point(0, 0),
-                //Size = new System.Drawing.Size(_width, _height),
-                ClientSize = new System.Drawing.Size(_width, _height - 50),
+                ClientSize = new System.Drawing.Size(_width, _height - _verticalMargin),
                 Parent = _underlyingForm,
                 Visible = true,
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
@@ -49,11 +47,11 @@ namespace GCDCalculation
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    _chart.ChartAreas[0].AxisX.Enabled = AxisEnabled.False;
+                    _chart.ChartAreas[0].AxisY.Enabled = AxisEnabled.False;
                     chartType = SeriesChartType.Bar;
                     break;
                 case Orientation.Vertical:
-                    _chart.ChartAreas[0].AxisY.Enabled = AxisEnabled.False;
+                    _chart.ChartAreas[0].AxisX.Enabled = AxisEnabled.False;
                     chartType = SeriesChartType.Column;
                     break;
 
@@ -63,7 +61,6 @@ namespace GCDCalculation
             _chart.Series[0].Points.AddXY(1, first.TotalMilliseconds);
             _chart.Series[1].Points.AddXY(2, second.TotalMilliseconds);
 
-            //_chart.DataSource = new[] { first.TotalMilliseconds, second.TotalMilliseconds };
             _backgroundThread.Start();
         }
 
@@ -73,6 +70,11 @@ namespace GCDCalculation
             _chart.Series[1].LegendText = secondName;
         }
 
-        public void TerminateThread() => _underlyingForm.Invoke((Action)(() => Application.Exit()));
+        public void TerminateThread()
+        {
+            if (!_underlyingForm.IsDisposed && _underlyingForm.InvokeRequired)
+                _underlyingForm.Invoke((Action)(() => Application.Exit()));
+            _backgroundThread.Join();
+        }
     }
 }
