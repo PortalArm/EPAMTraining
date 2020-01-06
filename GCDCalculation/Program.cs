@@ -27,7 +27,7 @@ namespace GCDCalculation
 Метод Стейна: {bingcd.TotalMilliseconds}");
 
             var renderer = new ChartRenderer();
-            renderer.SetDataLegend("GCD", "Efficient GCD");
+            renderer.SetDataLegend("GCD", "Binary GCD");
             renderer.Render(gcd, bingcd, Orientation.Vertical);
 
             Console.ReadKey();

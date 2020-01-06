@@ -72,6 +72,7 @@ namespace GCDCalculation
 
         public void TerminateThread()
         {
+            //Скорее всего, что-то не так
             if (!_underlyingForm.IsDisposed && _underlyingForm.InvokeRequired)
                 _underlyingForm.Invoke((Action)(() => Application.Exit()));
             _backgroundThread.Join();
