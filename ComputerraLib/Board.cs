@@ -10,6 +10,7 @@ namespace ComputerraLib
     public class Board
     {
         private int _tick;
+        public bool ExitThread { get; set; } = false;
         private const int _dayTickCount = 30;
         private readonly Random _random = new Random();
 
@@ -167,26 +168,34 @@ namespace ComputerraLib
             GameObject.Logger($"{obj} placed on {obj.Position}", MessageType.Placing);
         }
 
+        public event Action FieldUpdated;
+
         public void Run(int tickTimeMilliseconds, int dayCount = 16)
         {
+            
             int dtc = dayCount;
             do
             {
+                List<GameObject> listToProcess = new List<GameObject>();
                 for (int i = 0; i < Rows; ++i)
                     for (int j = 0; j < Cols; ++j)
                     {
                         GameObject currObject = GetObjAtPos(i, j);
                         if (currObject != null && currObject.IsAnimate)
-                        {
-                            if (_tick == dtc / 2 && currObject is Customer)
-                                (currObject as Customer).AddTasks(4);
-
-                            AttemptMove(currObject, (Direction)_random.Next(4));
-                        }
+                            listToProcess.Add(currObject);
                     }
+
+                foreach (GameObject current in listToProcess)
+                {
+                    if (_tick == dtc / 2 && current is Customer)
+                        (current as Customer).AddTasks(12);
+
+                    AttemptMove(current, (Direction)_random.Next(4));
+                }
+                FieldUpdated?.Invoke();
                 Thread.Sleep(tickTimeMilliseconds);
             }
-            while (++_tick < dtc);
+            while (++_tick < dtc && !ExitThread);
             //while (++_tick < _dayTickCount);
         }
         public T GenerateObject<T>() where T : GameObject
