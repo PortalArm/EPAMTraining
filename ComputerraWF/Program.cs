@@ -23,7 +23,8 @@ namespace ComputerraWF
             int workersCount = 5;
             for (int i = 0; i < workersCount; ++i)
                 workers.Add(board.GenerateObject<Worker>());
-
+            GameObject.SetLogger((m, t) => { if (((MessageType.ObjectLog | MessageType.Placing)).HasFlag(t)) Console.WriteLine(m); });
+            board.Run(333, 32);
 
             //Console.WriteLine(board.FreeCells);
             //BigBoss bb = new BigBoss(325326, "Big boss", true, new Point(5, 10));

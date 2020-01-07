@@ -2,11 +2,13 @@
 
 namespace ComputerraLib
 {
+    [Flags]
+    public enum MessageType { Moving = 1, Interacting = 2, ObjectLog = 4, Placing = 8, Error = 16 }
     public abstract class GameObject : IMoveable
     {
         public abstract bool IsAnimate { get; }
         public Point Position { get; protected set; }
-        public static void SetLogger(Action<string> act) => Logger = act;
+        public static void SetLogger(Action<string,MessageType> act) => Logger = act;
 
         public void Move(Point p) => Position = p;
         public virtual void Move(Direction dir)
@@ -28,7 +30,7 @@ namespace ComputerraLib
             }
         }
 
-        public static Action<string> Logger { get; private set; } = Console.WriteLine;
+        public static Action<string, MessageType> Logger { get; private set; } = (logString, logType) => Console.WriteLine(logString);
 
         protected GameObject(Point pos)
         {

@@ -17,7 +17,7 @@
         {
             if (managable is Worker)
             {
-                Logger($"{Name} forced {(managable as Worker).Name} to do following:");
+                Logger($"{Name} forced {(managable as Worker).Name} to do following:", MessageType.ObjectLog);
                 (managable as Worker).DoWork();
             }
 
@@ -27,7 +27,7 @@
         {
             if (count > _board.FreeCells)
             {
-                Logger($"{Name} can't add {count} objects on field.");
+                Logger($"{Name} can't add {count} objects on field.", MessageType.Error);
                 return;
             }
             for (int i = 0; i < count; ++i)
@@ -42,7 +42,7 @@
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
                 talkString = $"{Name} says 'Greetings!' to {employee.Name}";
-            Logger(talkString);
+            Logger(talkString, MessageType.ObjectLog);
         }
         public override string ToString() => $"{base.ToString()} {Name}";
     }

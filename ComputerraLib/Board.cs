@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace ComputerraLib
 {
+
     public class Board
     {
         private int _tick;
@@ -74,7 +75,7 @@ namespace ComputerraLib
             RemoveObjAtPos(objectPos); // FreeCells -> +1
             obj.Move(dir);
             SetObjAtPos(obj, obj.Position); // FreeCells -> -1
-            GameObject.Logger($"Moved {obj} from {objectPos} to {obj.Position}");
+            //GameObject.Logger($"Moved {obj} from {objectPos} to {obj.Position}");
             //FreeCells diff = 0
         }
         private bool IsPosInBounds(Point pos) => pos.X >= 0 && pos.Y >= 0 && pos.X < Cols && pos.Y < Rows;
@@ -83,7 +84,7 @@ namespace ComputerraLib
             Point newPos = GetNewPos(obj, dir);
             if (!IsPosInBounds(newPos))
             {
-                GameObject.Logger($"Can not move '{obj}' in {dir} direction (On the edge of the field).");
+                GameObject.Logger($"Can not move '{obj}' in {dir} direction (On the edge of the field).", MessageType.Error);
                 return false;
             }
             if (!(GetObjAtPos(newPos) is null))
@@ -118,23 +119,24 @@ namespace ComputerraLib
             //sender -> Trap (done)
             //sender(IManagable [Boss, Worker]) -> Work (done)
             //sender(IManage [BigBoss, Customer]) -> 
-            GameObject.Logger($"Interacting {sender} with {receiver}");
+            GameObject.Logger($"Interacting {sender} with {receiver}", MessageType.Interacting);
             
             if (!receiver.IsAnimate)
             {
                 if(receiver is NullObject)
-                    GameObject.Logger($"{sender} is staring at the wall.");
+                    GameObject.Logger($"{sender} is staring at the wall.", MessageType.ObjectLog);
                 else
                 if (sender is IManagable && receiver is Work)
                 {
                     (sender as IManagable).DoWork();
                     RemoveObjAtPos(receiver.Position);
-                    SpawnAtRandomPos(new Work(Point.Unreachable));
+                    GenerateObject<Work>();
+                    //SpawnAtRandomPos(new Work(Point.Unreachable));
                 }
                 else
                 if (receiver is Trap && (receiver as Trap).IsFatal)
                 {
-                    GameObject.Logger($"{sender} encountered a trap and died.");
+                    GameObject.Logger($"{sender} encountered a trap and died.", MessageType.ObjectLog);
                     RemoveObjAtPos(sender.Position);
                 }
                 return;
@@ -152,7 +154,7 @@ namespace ComputerraLib
         {
             if (FreeCells == 0)
             {
-                GameObject.Logger($"Can not spawn more objects.");
+                GameObject.Logger($"Can not spawn more objects.", MessageType.Error);
                 return;
             }
             //Поиск свободной ячейки
@@ -162,7 +164,7 @@ namespace ComputerraLib
             Point newPos = new Point(col, row);
             obj.Move(newPos);
             SetObjAtPos(obj, newPos);
-            GameObject.Logger($"{obj} placed on {obj.Position}");
+            GameObject.Logger($"{obj} placed on {obj.Position}", MessageType.Placing);
         }
 
         public void Run(int tickTimeMilliseconds, int dayCount = 16)
@@ -191,7 +193,7 @@ namespace ComputerraLib
         {
             if (FreeCells <= 0)
             {
-                GameObject.Logger("Can not generate more objects.");
+                GameObject.Logger("Can not generate more objects.", MessageType.Error);
                 return null;
             }
 

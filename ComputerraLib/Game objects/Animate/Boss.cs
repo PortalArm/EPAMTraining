@@ -8,9 +8,9 @@
 
         public void DoWork()
         {
-            Logger($"Increasing salary to me :) (Boss '{Name}')");
+            Logger($"Increasing salary to me :) (Boss '{Name}')", MessageType.ObjectLog);
             Salary *= 1.1m;
-            Logger($"Boss {Name}'s salary increased to {Salary} ");
+            Logger($"Boss {Name}'s salary increased to {Salary} ", MessageType.ObjectLog);
         }
 
         public virtual void Manage(IManagable managable)
@@ -26,7 +26,7 @@
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
                 talkString = $"{Name} says 'Greetings!' to {employee.Name}";
-            Logger(talkString);
+            Logger(talkString, MessageType.ObjectLog);
 
         }
     }

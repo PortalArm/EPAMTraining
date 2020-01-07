@@ -19,7 +19,7 @@
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
                 talkString = $"{Name} says 'Greetings!' to {employee.Name}";
-            Logger(talkString);
+            Logger(talkString, MessageType.ObjectLog);
         }
     }
 
