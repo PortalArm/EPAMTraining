@@ -17,7 +17,7 @@
         {
             if (managable is Worker)
             {
-                Logger($"{Name} forced {(managable as Worker).Name} to do following:", MessageType.ObjectLog);
+                Logger($"{Name} forced {(managable as Worker).Name} to do following:", MessageType.Managing);
                 (managable as Worker).DoWork();
             }
 
@@ -42,7 +42,7 @@
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
                 talkString = $"{Name} says 'Greetings!' to {employee.Name}";
-            Logger(talkString, MessageType.ObjectLog);
+            Logger(talkString, MessageType.Talking);
         }
         public override string ToString() => $"{base.ToString()} {Name}";
     }

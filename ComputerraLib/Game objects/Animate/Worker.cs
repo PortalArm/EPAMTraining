@@ -18,11 +18,11 @@ namespace ComputerraLib
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
                 talkString = $"{Name} says 'Greetings!' to {employee.Name}";
-            Logger(talkString, MessageType.ObjectLog);
+            Logger(talkString, MessageType.Talking);
         }
         public void DoWork()
         {
-            Logger($"Worker '{Name}' is working in the mine.", MessageType.ObjectLog);
+            Logger($"Worker '{Name}' is working in the mine.", MessageType.Working);
         }
     }
 

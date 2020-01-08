@@ -3,7 +3,19 @@
 namespace ComputerraLib
 {
     [Flags]
-    public enum MessageType { Moving = 1, Interacting = 2, ObjectLog = 4, Placing = 8, Error = 16 }
+    public enum MessageType { 
+        Moving = 1, 
+        Placing = 2, 
+        Error = 4,
+        InteractingWithNullObject = 8,
+        InteractingWithTrap = 16,
+        Interacting = 32,
+        SimulationInfo = 64,
+        Talking = 128,
+        Working = 256,
+        Managing = 512,
+        Saying = 1024
+    }
     public abstract class GameObject : IMoveable
     {
         public abstract bool IsAnimate { get; }
