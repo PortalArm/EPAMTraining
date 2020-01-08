@@ -43,9 +43,9 @@ namespace ComputerraLib
 
         private GameObject GetObjAtPos(int row, int col) => Field[row, col];
         private GameObject GetObjAtPos(Point pos) => GetObjAtPos(pos.Y, pos.X);
-        private void SetObjAtPos(GameObject obj, Point pos)
+        private void SetObjAtPos(GameObject obj)
         {
-            Field[pos.Y, pos.X] = obj;
+            Field[obj.Position.Y, obj.Position.X] = obj;
             FreeCells -= 1;
         }
 
@@ -75,7 +75,7 @@ namespace ComputerraLib
             Point objectPos = obj.Position;
             RemoveObjAtPos(objectPos); // FreeCells -> +1
             obj.Move(dir);
-            SetObjAtPos(obj, obj.Position); // FreeCells -> -1
+            SetObjAtPos(obj); // FreeCells -> -1
             //GameObject.Logger($"Moved {obj} from {objectPos} to {obj.Position}");
             //FreeCells diff = 0
         }
@@ -125,26 +125,28 @@ namespace ComputerraLib
             if (!receiver.IsAnimate)
             {
                 if(receiver is NullObject)
-                    GameObject.Logger($"{sender} is staring at the wall.", MessageType.ObjectLog);
+                    GameObject.Logger($"{sender} is staring at the wall.", MessageType.InteractingWithNullObject);
                 else
                 if (sender is IManagable && receiver is Work)
                 {
                     (sender as IManagable).DoWork();
                     RemoveObjAtPos(receiver.Position);
                     GenerateObject<Work>();
-                    //SpawnAtRandomPos(new Work(Point.Unreachable));
                 }
                 else
                 if (receiver is Trap && (receiver as Trap).IsFatal)
                 {
-                    GameObject.Logger($"{sender} encountered a trap and died.", MessageType.ObjectLog);
+                    GameObject.Logger($"{sender} encountered a trap and died.", MessageType.InteractingWithTrap);
                     RemoveObjAtPos(sender.Position);
                 }
                 return;
             }
 
             if (sender is Employee && receiver is Employee)
+            {
                 (sender as Employee).Talk(receiver as Employee);
+                (receiver as Employee).Talk(sender as Employee); 
+            }
 
             if (sender is IManage && receiver is IManagable)
                 (sender as IManage).Manage(receiver as IManagable);
@@ -159,12 +161,10 @@ namespace ComputerraLib
                 return;
             }
             //Поиск свободной ячейки
-            int row = _random.Next(Rows),
-                col = _random.Next(Cols);
+            int row, col;
             while (GetObjAtPos(row = _random.Next(Rows), col = _random.Next(Cols)) != null) ;
-            Point newPos = new Point(col, row);
-            obj.Move(newPos);
-            SetObjAtPos(obj, newPos);
+            obj.Move(new Point(col, row));
+            SetObjAtPos(obj);
             GameObject.Logger($"{obj} placed on {obj.Position}", MessageType.Placing);
         }
 
@@ -172,7 +172,7 @@ namespace ComputerraLib
 
         public void Run(int tickTimeMilliseconds, int dayCount = 16)
         {
-            
+            _tick = 0;
             int dtc = dayCount;
             do
             {
@@ -193,12 +193,29 @@ namespace ComputerraLib
                     AttemptMove(current, (Direction)_random.Next(4));
                 }
                 FieldUpdated?.Invoke();
+                GameObject.Logger($"Iteration {_tick}", MessageType.SimulationInfo);
                 Thread.Sleep(tickTimeMilliseconds);
             }
             while (++_tick < dtc && !ExitThread);
             //while (++_tick < _dayTickCount);
+
+            GameObject.Logger("Finished simulation", MessageType.SimulationInfo);
         }
-        public T GenerateObject<T>() where T : GameObject
+
+        public T GenerateObjectAt<T>(int x,int y) where T : GameObject
+        {
+            Point pos = new Point(x, y);
+            if (GetObjAtPos(pos) != null){
+
+                GameObject.Logger($"Can not generate object at {pos}", MessageType.Error);
+                return null;
+            }
+            T tmp = GenerateObject<T>(false);
+            tmp.Move(pos);
+            SetObjAtPos(tmp);
+            return tmp;
+        }
+        public T GenerateObject<T>(bool addToField = true) where T : GameObject
         {
             if (FreeCells <= 0)
             {
@@ -227,7 +244,8 @@ namespace ComputerraLib
             if (typeof(T) == typeof(NullObject))
                 obj = new NullObject(Point.Unreachable);
 
-            SpawnAtRandomPos(obj);
+            if(addToField)
+                SpawnAtRandomPos(obj);
             
             return obj as T;
         }
