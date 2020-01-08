@@ -24,7 +24,6 @@ namespace ComputerraWF
 
         private List<Button> buttons = new List<Button>();
         private List<PictureBox> colorBoxes = new List<PictureBox>();
-        private Dictionary<Type, Color> _colorToClassBinding = new Dictionary<Type, Color>();
         private Thread _backgroundThread;
 
         private void Form1_Load(object sender, EventArgs e)
@@ -49,10 +48,11 @@ namespace ComputerraWF
                     Parent = groupBox1
                 });
 
-                //Для решения замыкания
-                int index = i;
+
                 colorBoxes[i].BackColor = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
                 
+                //Для решения замыкания
+                int index = i;
                 buttons[i].Click += (_s, _e) => {
                     if (colorDialog1.ShowDialog() != DialogResult.OK)
                         return;
@@ -64,7 +64,10 @@ namespace ComputerraWF
             }
             board = new Board(20, 20);
             GameObject.SetLogger((m, t) => {
-                if (((MessageType.ObjectLog | MessageType.Placing)).HasFlag(t))
+                if (t.HasFlag(MessageType.SimulationInfo))
+                    m = m.PadLeft(32).PadRight(64);//new string(m.Prepend('-').Append('-').ToArray());
+
+                if (((MessageType.Managing | MessageType.Talking | MessageType.SimulationInfo | MessageType.InteractingWithTrap | MessageType.Placing)).HasFlag(t))
                     if (listBox1.InvokeRequired)
                         listBox1.Invoke((Action)(() => listBox1.Items.Add(m)));
                     else
@@ -74,13 +77,21 @@ namespace ComputerraWF
 
             List<Worker> workers = new List<Worker>();
             int workersCount = 8;
+            board.GenerateObjectAt<NullObject>(5, 6); 
             for (int i = 0; i < workersCount; ++i)
                 workers.Add(board.GenerateObject<Worker>());
             board.GenerateObject<Customer>();
+            for (int i = 0; i < 3; ++i)
+                board.GenerateObject<Boss>();
+            for (int i = 0; i < 3; ++i)
+                board.GenerateObject<Work>();
+            board.GenerateObject<BigBoss>();
 
 
-            _backgroundThread = new Thread(() => { board.Run(1000, 32); GameObject.Logger("Finished simulation", MessageType.ObjectLog); });
-            _backgroundThread.Start();
+
+
+            _backgroundThread = new Thread(() => { board.Run(1000, 32); });
+             _backgroundThread.Start();
              //board.Run(20, 32);
 
         }

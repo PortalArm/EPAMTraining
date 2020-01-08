@@ -16,15 +16,6 @@ namespace ComputerraWF
         [STAThread]
         static void Main()
         {
-
-
-            //Board board = new Board(20, 20);
-            //List<Worker> workers = new List<Worker>();
-            //int workersCount = 5;
-            //for (int i = 0; i < workersCount; ++i)
-            //    workers.Add(board.GenerateObject<Worker>());
-            //GameObject.SetLogger((m, t) => { if (((MessageType.ObjectLog | MessageType.Placing)).HasFlag(t)) Console.WriteLine(m); });
-            //board.Run(333, 32);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
