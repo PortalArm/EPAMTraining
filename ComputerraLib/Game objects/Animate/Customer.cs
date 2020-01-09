@@ -12,7 +12,6 @@
         public string Name { get; set; }
         public bool Mood { get; set; }
         public override bool IsAnimate { get; } = true;
-
         public void Manage(IManagable managable)
         {
             if (managable is Worker)
@@ -20,9 +19,7 @@
                 Logger($"{Name} forced {(managable as Worker).Name} to do following:", MessageType.Managing);
                 (managable as Worker).DoWork();
             }
-
         }
-
         public void AddTasks(int count)
         {
             if (count > _board.FreeCells)
@@ -32,12 +29,10 @@
             }
             for (int i = 0; i < count; ++i)
                 _board.SpawnAtRandomPos(new Work(Point.Unreachable));
-
         }
-
         public void Talk(Employee employee)
         {
-            string talkString = string.Empty;
+            string talkString;
             if (employee is BigBoss)
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
@@ -46,5 +41,4 @@
         }
         public override string ToString() => $"{base.ToString()} {Name}";
     }
-
 }

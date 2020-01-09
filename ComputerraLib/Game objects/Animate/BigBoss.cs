@@ -5,13 +5,11 @@
         public BigBoss(decimal salary, string name, bool mood, Point position) : base(salary, name, mood, position)
         {
         }
-
         public override void Manage(IManagable managable)
         {
             if (managable is Boss)
                 (managable as Boss).DoWork();
         }
-
         public override void Talk(Employee employee)
         {
             string talkString;
@@ -22,5 +20,4 @@
             Logger(talkString, MessageType.Talking);
         }
     }
-
 }

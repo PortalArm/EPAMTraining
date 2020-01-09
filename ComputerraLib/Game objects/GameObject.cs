@@ -21,7 +21,6 @@ namespace ComputerraLib
         public abstract bool IsAnimate { get; }
         public Point Position { get; protected set; }
         public static void SetLogger(Action<string,MessageType> act) => Logger = act;
-
         public void Move(Point p) => Position = p;
         public virtual void Move(Direction dir)
         {
@@ -41,15 +40,11 @@ namespace ComputerraLib
                     return;
             }
         }
-
         public static Action<string, MessageType> Logger { get; private set; } = (logString, logType) => Console.WriteLine(logString);
-
         protected GameObject(Point pos)
         {
             Position = pos;
         }
-
         public override string ToString() => GetType().Name;
     }
-
 }

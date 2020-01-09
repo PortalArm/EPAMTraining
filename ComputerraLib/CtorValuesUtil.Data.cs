@@ -60,8 +60,5 @@ namespace ComputerraLib
 "Sabina Ferguson" };
 
         private static int[] _salaries = { 30000, 40000, 50000, 60000, 70000, 45000, 40000, 35000, 20000, 34000 };
-
-        
-
     }
 }

@@ -8,7 +8,6 @@
             Name = name;
             Mood = mood;
         }
-
         public decimal Salary { get; set; }
         public string Name { get; set; }
         public bool Mood { get; set; }

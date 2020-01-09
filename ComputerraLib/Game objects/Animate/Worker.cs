@@ -10,10 +10,9 @@ namespace ComputerraLib
         public Worker(decimal salary, string name, bool mood, Point position) : base(salary, name, mood, position)
         {
         }
-
         public override void Talk(Employee employee)
         {
-            string talkString = string.Empty;
+            string talkString;
             if (employee is Worker)
                 talkString = $"{Name} says 'Hello!' to {employee.Name}";
             else
@@ -25,5 +24,4 @@ namespace ComputerraLib
             Logger($"Worker '{Name}' is working in the mine.", MessageType.Working);
         }
     }
-
 }

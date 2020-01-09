@@ -9,9 +9,8 @@ namespace ComputerraLib
 
     public class Board
     {
-        private int _tick;
         public bool ExitThread { get; set; } = false;
-        private const int _dayTickCount = 30;
+        private Dictionary<GameObject, GameObject> talkedTo;
         private readonly Random _random = new Random();
 
         public GameObject[,] Field { get; set; }
@@ -49,27 +48,6 @@ namespace ComputerraLib
             FreeCells -= 1;
         }
 
-        //public void AddObject(GameObject obj)
-        //{
-        //    if (FreeCells < 0)
-        //        throw new InvalidOperationException("Out of cells.");
-
-        //    if (!(GetObjAtPos(obj.Position) is null))
-        //        throw new InvalidOperationException($"Cell {obj.Position} is occupied.");
-
-        //    GameObject.Logger($"{obj} placed on {obj.Position}");
-        //    SetObjAtPos(obj, obj.Position);
-
-        //    //FreeCells -= 1;
-        //}
-
-        //public void AddObjectRange(IEnumerable<GameObject> objects)
-        //{
-        //    foreach (GameObject obj in objects)
-        //        AddObject(obj);
-        //}
-
-
         private void MoveObj(GameObject obj, Direction dir)
         {
             Point objectPos = obj.Position;
@@ -80,26 +58,23 @@ namespace ComputerraLib
             //FreeCells diff = 0
         }
         private bool IsPosInBounds(Point pos) => pos.X >= 0 && pos.Y >= 0 && pos.X < Cols && pos.Y < Rows;
-        private bool AttemptMove(GameObject obj, Direction dir)
+        private void AttemptMove(GameObject obj, Direction dir)
         {
             Point newPos = GetNewPos(obj, dir);
             if (!IsPosInBounds(newPos))
             {
                 GameObject.Logger($"Can not move '{obj}' in {dir} direction (On the edge of the field).", MessageType.Error);
-                return false;
+                return;
             }
             if (!(GetObjAtPos(newPos) is null))
                 Interact(obj, GetObjAtPos(newPos));
             else
                 MoveObj(obj, dir);
-
-            return true;
-
         }
-
         private Point GetNewPos(GameObject obj, Direction dir)
         {
             //Тупо, но работает
+            //Так, только в одном месте прописана логика перемещения объектов (Класс GameObject)
             Point oldPos = obj.Position;
             obj.Move(dir);
             Point newPos = obj.Position;
@@ -111,10 +86,8 @@ namespace ComputerraLib
             Field[row, col] = null;
             FreeCells += 1;
         }
-
         private void RemoveObjAtPos(Point pos) => RemoveObjAtPos(pos.Y, pos.X);
 
-        private Dictionary<GameObject, GameObject> talkedTo;
         private void Interact(GameObject sender, GameObject receiver)
         {
             GameObject.Logger($"Interacting {sender} with {receiver}", MessageType.Interacting);
@@ -142,7 +115,7 @@ namespace ComputerraLib
             if (sender is Employee && receiver is Employee)
             {
                 //Если sender поприветствовал receiver, receiver поприветствует sender в ответ,
-                //но если в одном ходу receiver захочет поздороваться, это нужно учесть.
+                //но если в одном ходу receiver захочет опять поздороваться, это нужно учесть.
                 if(talkedTo.TryGetValue(sender, out GameObject rec) && rec == receiver)
                     return;
 
@@ -174,10 +147,9 @@ namespace ComputerraLib
 
         public event Action FieldUpdated;
 
-        public void Run(int tickTimeMilliseconds, int dayCount = 16)
+        public void Run(int tickTimeMilliseconds, int tickCount = 16)
         {
-            _tick = 0;
-            int dtc = dayCount;
+            int tick = 0;
             talkedTo = new Dictionary<GameObject, GameObject>();
             List<GameObject> listToProcess = new List<GameObject>();
             do
@@ -191,24 +163,22 @@ namespace ComputerraLib
                         if (currObject != null && currObject.IsAnimate)
                             listToProcess.Add(currObject);
                     }
-
+                
                 foreach (GameObject current in listToProcess)
                 {
-                    if (_tick == dtc / 2 && current is Customer)
+                    if (tick == tickCount / 2 && current is Customer)
                         (current as Customer).AddTasks(12);
 
                     AttemptMove(current, (Direction)_random.Next(4));
                 }
+
                 FieldUpdated?.Invoke();
-                GameObject.Logger($"Iteration {_tick}", MessageType.SimulationInfo);
+                GameObject.Logger($"Iteration {tick}", MessageType.SimulationInfo);
                 Thread.Sleep(tickTimeMilliseconds);
             }
-            while (++_tick < dtc && !ExitThread);
-            //while (++_tick < _dayTickCount);
-
+            while (++tick < tickCount && !ExitThread);
             GameObject.Logger("Finished simulation", MessageType.SimulationInfo);
         }
-
         public T GenerateObjectAt<T>(int x,int y) where T : GameObject
         {
             Point pos = new Point(x, y);
@@ -229,7 +199,6 @@ namespace ComputerraLib
                 GameObject.Logger("Can not generate more objects.", MessageType.Error);
                 return null;
             }
-
             GameObject obj = null;
             if (typeof(T) == typeof(Worker))
                 obj = new Worker(CtorValuesUtil.GetRandomSalary(), CtorValuesUtil.GetRandomName(), CtorValuesUtil.GetRandomMood(), Point.Unreachable);
@@ -245,6 +214,7 @@ namespace ComputerraLib
 
             if (typeof(T) == typeof(Trap))
                 obj = new Trap(Point.Unreachable, true);
+
             if (typeof(T) == typeof(Work))
                 obj = new Work(Point.Unreachable);
 

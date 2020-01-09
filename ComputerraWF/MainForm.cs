@@ -155,8 +155,6 @@ namespace ComputerraWF
                 //    listBox1.Items.Add(message);
             }
         }
-
-
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             //Используется для отрисовки сетки и объектов на поверхность PictureBox

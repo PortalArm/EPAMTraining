@@ -25,7 +25,6 @@ namespace ComputerraWF
                 setupForm.Dispose();
                 Application.Run(new MainForm(pars[0], pars[1], pars[2], pars[3], pars[4], pars[5], pars[6], pars[7], pars[8], pars[9], pars[10]));
             }
-           
         }
     }
 }
