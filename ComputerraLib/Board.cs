@@ -166,6 +166,7 @@ namespace ComputerraLib
                 
                 foreach (GameObject current in listToProcess)
                 {
+                    //Customer выдает 12 работ через половину тиков
                     if (tick == tickCount / 2 && current is Customer)
                         (current as Customer).AddTasks(12);
 

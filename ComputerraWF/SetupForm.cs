@@ -55,14 +55,12 @@ namespace ComputerraWF
             startButton.Location = new System.Drawing.Point(startButton.Location.X, lastBox.Location.Y + lastBox.Height + 5);
             AutoSize = true;
 
-
             //Начальные значения
             GetTextBoxByType(typeof(Work)).Text = "6";
             GetTextBoxByType(typeof(Worker)).Text = "12";
-            GetTextBoxByType(typeof(Customer)).Text = "2";
+            GetTextBoxByType(typeof(Customer)).Text = "1";
             GetTextBoxByType(typeof(Boss)).Text = "1";
             GetTextBoxByType(typeof(Trap)).Text = "1";
-
         }
 
         private TextBox GetTextBoxByType(Type type) => inputBoxes.First(w => (Type)w.Tag == type);
@@ -83,7 +81,6 @@ namespace ComputerraWF
             OutputParameters = new[] { rows, cols, tickdur, tickcount, nullobj, trap, work, bigboss, boss, customer, worker };
             DialogResult = DialogResult.OK;
             Hide();
-
         }
     }
 }

@@ -102,7 +102,7 @@
             this.TickCountBox.Name = "TickCountBox";
             this.TickCountBox.Size = new System.Drawing.Size(40, 20);
             this.TickCountBox.TabIndex = 5;
-            this.TickCountBox.Text = "500";
+            this.TickCountBox.Text = "50";
             // 
             // TickDurationBox
             // 
