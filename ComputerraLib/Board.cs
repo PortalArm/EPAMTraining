@@ -113,13 +113,10 @@ namespace ComputerraLib
         }
 
         private void RemoveObjAtPos(Point pos) => RemoveObjAtPos(pos.Y, pos.X);
+
+        private Dictionary<GameObject, GameObject> talkedTo;
         private void Interact(GameObject sender, GameObject receiver)
         {
-            //sender - [BigBoss, Boss, Customer, Worker]
-            //receiver - [All]
-            //sender -> Trap (done)
-            //sender(IManagable [Boss, Worker]) -> Work (done)
-            //sender(IManage [BigBoss, Customer]) -> 
             GameObject.Logger($"Interacting {sender} with {receiver}", MessageType.Interacting);
             
             if (!receiver.IsAnimate)
@@ -144,8 +141,15 @@ namespace ComputerraLib
 
             if (sender is Employee && receiver is Employee)
             {
+                //Если sender поприветствовал receiver, receiver поприветствует sender в ответ,
+                //но если в одном ходу receiver захочет поздороваться, это нужно учесть.
+                if(talkedTo.TryGetValue(sender, out GameObject rec) && rec == receiver)
+                    return;
+
                 (sender as Employee).Talk(receiver as Employee);
-                (receiver as Employee).Talk(sender as Employee); 
+                (receiver as Employee).Talk(sender as Employee);
+                talkedTo[receiver] = sender;
+
             }
 
             if (sender is IManage && receiver is IManagable)
@@ -174,9 +178,12 @@ namespace ComputerraLib
         {
             _tick = 0;
             int dtc = dayCount;
+            talkedTo = new Dictionary<GameObject, GameObject>();
+            List<GameObject> listToProcess = new List<GameObject>();
             do
             {
-                List<GameObject> listToProcess = new List<GameObject>();
+                talkedTo.Clear();
+                listToProcess.Clear();
                 for (int i = 0; i < Rows; ++i)
                     for (int j = 0; j < Cols; ++j)
                     {

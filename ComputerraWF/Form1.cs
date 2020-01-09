@@ -129,8 +129,8 @@ namespace ComputerraWF
         {
             InitializeColorChangeButtons();
             InitializeBoard(20, 20);
-            AddObjects(nullObjects: 4, traps: 16, workers: 8, customers: 2);
-            StartSimulation(1000, 64);
+            AddObjects(nullObjects: 4, workers: 8, customers: 2, bosses: 4);
+            StartSimulation(0, 1024);
         }
         
         /// <summary>
@@ -153,6 +153,7 @@ namespace ComputerraWF
         
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            
             //Используется для отрисовки сетки и объектов на поверхность PictureBox
             float boxDim = (pictureBox1.Width - 1) * 1.0f / _board.Rows;
             Graphics g = e.Graphics;
