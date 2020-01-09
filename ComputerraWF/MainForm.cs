@@ -15,23 +15,30 @@ namespace ComputerraWF
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        public MainForm(int rows, int cols, int tickDuration, int tickCount, int nullObjects = 0, int traps = 0, int works = 0, int bigbosses = 0, int bosses = 0, int customers = 0, int workers = 0)
         {
             InitializeComponent();
+            synchronizationContext = SynchronizationContext.Current;
             placeholderButton.Hide();
             placeholderPictureBox.Hide();
+            InitializeColorChangeButtons();
+            InitializeBoard(rows, cols);
+            _tickDuration = tickDuration;
+            _tickCount = tickCount;
+            AddObjects(nullObjects, traps, works, bigbosses, bosses, customers, workers);
         }
 
+        private SynchronizationContext synchronizationContext;
         private List<Button> buttons = new List<Button>();
         private List<PictureBox> colorBoxes = new List<PictureBox>();
         private Thread _backgroundThread;
         private Board _board;
-
+        private int _tickDuration, _tickCount;
         private void InitializeColorChangeButtons()
         {
             //Получаем все неабстрактные типы, которые явно или неявно наследованы от GameObject 
             var objectsTypes = Assembly.GetAssembly(typeof(GameObject)).GetTypes().Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(GameObject))).ToList();
-            
+
             //Просто чтобы у объектов были разные цвета при старте программы
             Random r = new Random();
             for (int i = 0; i < objectsTypes.Count(); ++i)
@@ -114,7 +121,6 @@ namespace ComputerraWF
 
         }
 
-
         /// <summary>
         /// Запускает симуляцию игры с заданными параметрами
         /// </summary>
@@ -125,14 +131,8 @@ namespace ComputerraWF
             _backgroundThread = new Thread(() => { _board.Run(tickLengthInMilliseconds, totalTicks); });
             _backgroundThread.Start();
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            InitializeColorChangeButtons();
-            InitializeBoard(20, 20);
-            AddObjects(nullObjects: 4, workers: 8, customers: 2, bosses: 4);
-            StartSimulation(0, 1024);
-        }
-        
+        private void Form1_Load(object sender, EventArgs e) => StartSimulation(_tickDuration, _tickCount);
+
         /// <summary>
         /// Метод, обрабатывающий сообщение в зависимости от того, какой у него <paramref name="type"/>
         /// </summary>
@@ -144,16 +144,21 @@ namespace ComputerraWF
                 message = message.PadLeft(32).PadRight(64);//new string(m.Prepend('-').Append('-').ToArray());
 
             if (((MessageType.Managing | MessageType.Working | MessageType.Talking | MessageType.SimulationInfo | MessageType.InteractingWithTrap | MessageType.Placing)).HasFlag(type))
-                if (listBox1.InvokeRequired)
-                    listBox1.Invoke((Action)(() => listBox1.Items.Add(message)));
-                else
-                    listBox1.Items.Add(message);
+            {
+                synchronizationContext.Post(obj => listBox1.Items.Add(message), null);
+                //if (listBox1.InvokeRequired)
+                //    listBox1.Invoke((Action)(() => { 
+                //        if (Thread.CurrentThread.IsAlive) 
+                //            listBox1.Items.Add(message); 
+                //    }));
+                //else
+                //    listBox1.Items.Add(message);
+            }
         }
 
-        
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            
             //Используется для отрисовки сетки и объектов на поверхность PictureBox
             float boxDim = (pictureBox1.Width - 1) * 1.0f / _board.Rows;
             Graphics g = e.Graphics;
@@ -170,9 +175,9 @@ namespace ComputerraWF
                     g.DrawLine(Pens.Black, (i + 1) * boxDim, j * boxDim, (i + 1) * boxDim, (j + 1) * boxDim);
                 }
         }
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _board.ExitThread = true;
-        }
+
+        //Не уверен как сделать лучше
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) => _board.ExitThread = true;
+
     }
 }
