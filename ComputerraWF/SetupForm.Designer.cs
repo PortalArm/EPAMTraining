@@ -31,15 +31,15 @@
             this.RowsBox = new System.Windows.Forms.TextBox();
             this.ColsBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tickCountLabel = new System.Windows.Forms.Label();
+            this.tickDurationLabel = new System.Windows.Forms.Label();
+            this.TickCountBox = new System.Windows.Forms.TextBox();
+            this.TickDurationBox = new System.Windows.Forms.TextBox();
             this.colsLabel = new System.Windows.Forms.Label();
             this.rowsLabel = new System.Windows.Forms.Label();
             this.placeholderLabel = new System.Windows.Forms.Label();
             this.PlaceholderBox = new System.Windows.Forms.TextBox();
             this.startButton = new System.Windows.Forms.Button();
-            this.TickDurationBox = new System.Windows.Forms.TextBox();
-            this.TickCountBox = new System.Windows.Forms.TextBox();
-            this.tickDurationLabel = new System.Windows.Forms.Label();
-            this.tickCountLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,6 +78,40 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Размерность поля и настройки симуляции";
             // 
+            // tickCountLabel
+            // 
+            this.tickCountLabel.AutoSize = true;
+            this.tickCountLabel.Location = new System.Drawing.Point(156, 48);
+            this.tickCountLabel.Name = "tickCountLabel";
+            this.tickCountLabel.Size = new System.Drawing.Size(68, 13);
+            this.tickCountLabel.TabIndex = 7;
+            this.tickCountLabel.Text = "тиков всего";
+            // 
+            // tickDurationLabel
+            // 
+            this.tickDurationLabel.AutoSize = true;
+            this.tickDurationLabel.Location = new System.Drawing.Point(156, 22);
+            this.tickDurationLabel.Name = "tickDurationLabel";
+            this.tickDurationLabel.Size = new System.Drawing.Size(56, 13);
+            this.tickDurationLabel.TabIndex = 6;
+            this.tickDurationLabel.Text = "мс в тике";
+            // 
+            // TickCountBox
+            // 
+            this.TickCountBox.Location = new System.Drawing.Point(110, 45);
+            this.TickCountBox.Name = "TickCountBox";
+            this.TickCountBox.Size = new System.Drawing.Size(40, 20);
+            this.TickCountBox.TabIndex = 5;
+            this.TickCountBox.Text = "500";
+            // 
+            // TickDurationBox
+            // 
+            this.TickDurationBox.Location = new System.Drawing.Point(110, 19);
+            this.TickDurationBox.Name = "TickDurationBox";
+            this.TickDurationBox.Size = new System.Drawing.Size(40, 20);
+            this.TickDurationBox.TabIndex = 4;
+            this.TickDurationBox.Text = "100";
+            // 
             // colsLabel
             // 
             this.colsLabel.AutoSize = true;
@@ -101,9 +135,9 @@
             this.placeholderLabel.AutoSize = true;
             this.placeholderLabel.Location = new System.Drawing.Point(15, 97);
             this.placeholderLabel.Name = "placeholderLabel";
-            this.placeholderLabel.Size = new System.Drawing.Size(35, 13);
+            this.placeholderLabel.Size = new System.Drawing.Size(82, 13);
             this.placeholderLabel.TabIndex = 3;
-            this.placeholderLabel.Text = "label3";
+            this.placeholderLabel.Text = "placeholder text";
             // 
             // PlaceholderBox
             // 
@@ -123,40 +157,6 @@
             this.startButton.Text = "Start simulation";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // TickDurationBox
-            // 
-            this.TickDurationBox.Location = new System.Drawing.Point(110, 19);
-            this.TickDurationBox.Name = "TickDurationBox";
-            this.TickDurationBox.Size = new System.Drawing.Size(40, 20);
-            this.TickDurationBox.TabIndex = 4;
-            this.TickDurationBox.Text = "100";
-            // 
-            // TickCountBox
-            // 
-            this.TickCountBox.Location = new System.Drawing.Point(110, 45);
-            this.TickCountBox.Name = "TickCountBox";
-            this.TickCountBox.Size = new System.Drawing.Size(40, 20);
-            this.TickCountBox.TabIndex = 5;
-            this.TickCountBox.Text = "500";
-            // 
-            // tickDurationLabel
-            // 
-            this.tickDurationLabel.AutoSize = true;
-            this.tickDurationLabel.Location = new System.Drawing.Point(156, 22);
-            this.tickDurationLabel.Name = "tickDurationLabel";
-            this.tickDurationLabel.Size = new System.Drawing.Size(56, 13);
-            this.tickDurationLabel.TabIndex = 6;
-            this.tickDurationLabel.Text = "мс в тике";
-            // 
-            // tickCountLabel
-            // 
-            this.tickCountLabel.AutoSize = true;
-            this.tickCountLabel.Location = new System.Drawing.Point(156, 48);
-            this.tickCountLabel.Name = "tickCountLabel";
-            this.tickCountLabel.Size = new System.Drawing.Size(68, 13);
-            this.tickCountLabel.TabIndex = 7;
-            this.tickCountLabel.Text = "тиков всего";
             // 
             // SetupForm
             // 
