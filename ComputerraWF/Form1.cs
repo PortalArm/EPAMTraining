@@ -29,10 +29,11 @@ namespace ComputerraWF
 
         private void InitializeColorChangeButtons()
         {
+            //Получаем все неабстрактные типы, которые явно или неявно наследованы от GameObject 
             var objectsTypes = Assembly.GetAssembly(typeof(GameObject)).GetTypes().Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(GameObject))).ToList();
-            //Просто чтобы у объектов были разные цвета
+            
+            //Просто чтобы у объектов были разные цвета при старте программы
             Random r = new Random();
-
             for (int i = 0; i < objectsTypes.Count(); ++i)
             {
                 buttons.Add(new Button() {
@@ -53,7 +54,9 @@ namespace ComputerraWF
 
                 //Для решения замыкания
                 int index = i;
-                buttons[i].Click += (_s, _e) => {
+
+                //Анонимный метод для установки цвета, которым будет отображен объект
+                buttons[i].Click += (s, e) => {
                     if (colorDialog1.ShowDialog() != DialogResult.OK)
                         return;
 
@@ -64,14 +67,28 @@ namespace ComputerraWF
             }
         }
 
+        /// <summary>
+        /// Инициализация игрового поля размера <paramref name="rows"/> x <paramref name="cols"/>
+        /// </summary>
+        /// <param name="rows">Количество рядов</param>
+        /// <param name="cols">Количество столбцов</param>
         private void InitializeBoard(int rows, int cols)
         {
             _board = new Board(rows, cols);
             GameObject.SetLogger(ProcessMessage);
             _board.FieldUpdated += pictureBox1.Invalidate;
-
         }
 
+        /// <summary>
+        /// Метод для удобного добавления множества объектов разного типа
+        /// </summary>
+        /// <param name="nullObjects">Количество стен(NullObject'ов)</param>
+        /// <param name="traps">Количество ловушек</param>
+        /// <param name="works">Количество работ</param>
+        /// <param name="bigbosses">Количество бигбоссов</param>
+        /// <param name="bosses">Количество боссов</param>
+        /// <param name="customers">Количество клиентов</param>
+        /// <param name="workers">Количество рабочих</param>
         private void AddObjects(int nullObjects = 0, int traps = 0, int works = 0, int bigbosses = 0, int bosses = 0, int customers = 0, int workers = 0)
         {
             for (int i = 0; i < nullObjects; ++i)
@@ -96,16 +113,31 @@ namespace ComputerraWF
                 _board.GenerateObject<Worker>();
 
         }
+
+
+        /// <summary>
+        /// Запускает симуляцию игры с заданными параметрами
+        /// </summary>
+        /// <param name="tickLengthInMilliseconds">Длина одного игрового хода (или же время задержки между ходами)</param>
+        /// <param name="totalTicks">Общее количество ходов</param>
+        private void StartSimulation(int tickLengthInMilliseconds, int totalTicks)
+        {
+            _backgroundThread = new Thread(() => { _board.Run(tickLengthInMilliseconds, totalTicks); });
+            _backgroundThread.Start();
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             InitializeColorChangeButtons();
             InitializeBoard(20, 20);
             AddObjects(nullObjects: 4, traps: 16, workers: 8, customers: 2);
-
-            _backgroundThread = new Thread(() => { _board.Run(1000, 32); });
-            _backgroundThread.Start();
+            StartSimulation(1000, 64);
         }
-
+        
+        /// <summary>
+        /// Метод, обрабатывающий сообщение в зависимости от того, какой у него <paramref name="type"/>
+        /// </summary>
+        /// <param name="message">Сообщение</param>
+        /// <param name="type">Тип сообщения</param>
         private void ProcessMessage(string message, MessageType type)
         {
             if (type.HasFlag(MessageType.SimulationInfo))
@@ -117,8 +149,11 @@ namespace ComputerraWF
                 else
                     listBox1.Items.Add(message);
         }
+
+        
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            //Используется для отрисовки сетки и объектов на поверхность PictureBox
             float boxDim = (pictureBox1.Width - 1) * 1.0f / _board.Rows;
             Graphics g = e.Graphics;
             if (_board is null)
