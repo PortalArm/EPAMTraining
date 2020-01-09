@@ -15,8 +15,12 @@
 
         public virtual void Manage(IManagable managable)
         {
+
             if (managable is Worker)
+            {
+                Logger($"{Name} forced {(managable as Worker).Name} to do following:", MessageType.Managing);
                 (managable as Worker).DoWork();
+            }
         }
 
         public override void Talk(Employee employee)
