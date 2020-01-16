@@ -5,7 +5,6 @@ namespace HomeWork04
 {
     public static class InputHandler
     {
-
         private static Action<string> _logger = Console.WriteLine;
 
         //Метод для установки действия, которое будет выполняться для текста
@@ -36,7 +35,7 @@ namespace HomeWork04
             output = default;
             T[] outs = null;
             bool result = CatchAny(
-                _try:   () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)Convert.ChangeType(w, typeof(T))).ToArray(),
+                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)Convert.ChangeType(w, typeof(T))).ToArray(),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
@@ -61,7 +60,7 @@ namespace HomeWork04
             T _out = default;
 
             bool result = CatchAny(
-                _try:   () => _out = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)),
+                _try: () => _out = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
