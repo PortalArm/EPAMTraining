@@ -37,6 +37,8 @@ namespace HomeWork04
             #endregion
             
             #region Task 3
+            //abc.txt - Случайный текст
+
             //TextInfo ti = null;
             //Console.WriteLine("Введите 'file', чтобы считать с файла, 'console', чтобы считать с консоли");
             //string input = Console.ReadLine();
