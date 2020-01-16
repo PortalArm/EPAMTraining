@@ -7,7 +7,7 @@ namespace HomeWork04
     {
         private static Action<string> _logger = Console.WriteLine;
 
-        //Метод для установки действия, которое будет выполняться для текста
+        //Метод для установки действия, которое будет выполняться для текста (по умолчанию Console.WriteLine)
         public static void SetLogger(Action<string> logger) => _logger = logger;
 
         //Метод для "компактной" замены блока try-catch-finally
@@ -30,12 +30,14 @@ namespace HomeWork04
         //Метод для получения входных данных, которые представляют массив определенного типа T, из консоли.
         public static bool GetArrayInputFromConsoleOneLine<T>(string message, out T[] output, int expectedSize = 0, Func<Exception, string> errorMessage = null, char[] delimiter = null)
         {
+            bool isEnum = typeof(T).IsEnum;
             _logger(message);
             char[] realDelim = delimiter ?? new[] { ' ' };
             output = default;
             T[] outs = null;
             bool result = CatchAny(
-                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)Convert.ChangeType(w, typeof(T))).ToArray(),
+                //Если выходной тип enum, то применяем Enum.Parse
+                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)(isEnum?Enum.Parse(typeof(T), w):Convert.ChangeType(w, typeof(T)))).ToArray(),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
@@ -55,12 +57,14 @@ namespace HomeWork04
         //Метод для получения входных данных, которые представляют значение типа T, из консоли.
         public static bool GetInputFromConsoleOneLine<T>(string message, out T output, Func<Exception, string> errorMessage = null)
         {
+            bool isEnum = typeof(T).IsEnum;
             _logger(message);
             output = default;
             T _out = default;
 
             bool result = CatchAny(
-                _try: () => _out = (T)Convert.ChangeType(Console.ReadLine(), typeof(T)),
+                //Если выходной тип enum, то применяем Enum.Parse
+                _try: () => _out = (T) (isEnum?Enum.Parse(typeof(T), Console.ReadLine(), true):Convert.ChangeType(Console.ReadLine(), typeof(T))),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
