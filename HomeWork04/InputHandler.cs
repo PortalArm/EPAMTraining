@@ -27,6 +27,9 @@ namespace HomeWork04
         }
         public static bool CatchAny(Action _try, Action<Exception> _catch = null, Action _finally = null) => Catch(_try, _catch, _finally);
 
+        //TODO: Добавить метод для стопроцентного получения корректных данных из консоли
+        //      Добавить проверку элемента/ов при помощи анонимных методов
+
         //Метод для получения входных данных, которые представляют массив определенного типа T, из консоли.
         public static bool GetArrayInputFromConsoleOneLine<T>(string message, out T[] output, int expectedSize = 0, Func<Exception, string> errorMessage = null, char[] delimiter = null)
         {

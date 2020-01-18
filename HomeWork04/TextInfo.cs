@@ -22,7 +22,6 @@ namespace HomeWork04
 
         //Шаблон для обнаружения предложения с дополнительной возможностью использовать кавычки. Все внутри кавычек будет трактовано как часть предложения.
         private const string _sentencePattern = @"(?<=(?:^|\.)[\s]*(?=(?:""|\b)))(?:(""[^""]*?"")*[^.""]*)+(?:\.|$)";
-
         private const string _wordPattern = @"\b\w+\b";
         private const string _characterPattern = @"\w";
         public int Sentences { get; private set; }

@@ -29,13 +29,13 @@ namespace HomeWork04
             //Qualification qual;
             //while(!InputHandler.GetArrayInputFromConsoleOneLine("Введите ваше ФИО", out name, expectedSize: 3, _ => "Необходимо корректное ФИО"));
             //string fio = string.Join(" ", name);
-            //while (!InputHandler.GetInputFromConsoleOneLine("Введите год рождения", out year, e => $"Введен некорректное значение ({e.Message})"));
-            //while (!InputHandler.GetInputFromConsoleOneLine($"Введите пол ({string.Join(", ", Enum.GetNames(typeof(Gender)))})", out gend, e => $"Введен некорректное значение ({e.Message})")) ;
-            //while (!InputHandler.GetInputFromConsoleOneLine($"Введите квалификацию ({string.Join(", ", Enum.GetNames(typeof(Qualification)))})", out qual, e => $"Введен некорректное значение ({e.Message})")) ;
+            //while (!InputHandler.GetInputFromConsoleOneLine("Введите год рождения", out year, e => $"Введено некорректное значение ({e.Message})"));
+            //while (!InputHandler.GetInputFromConsoleOneLine($"Введите пол ({string.Join(", ", Enum.GetNames(typeof(Gender)))})", out gend, e => $"Введено некорректное значение ({e.Message})")) ;
+            //while (!InputHandler.GetInputFromConsoleOneLine($"Введите квалификацию ({string.Join(", ", Enum.GetNames(typeof(Qualification)))})", out qual, e => $"Введено некорректное значение ({e.Message})")) ;
             //Employee empl = new Employee(fio, year, gend, qual);
             //Console.WriteLine($"Зарплата работника {empl.Name}: {empl.Salary}");
             #endregion
-            
+
             #region Task 3
             //abc.txt - Случайный текст
 

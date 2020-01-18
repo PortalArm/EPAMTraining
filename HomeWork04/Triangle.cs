@@ -35,7 +35,7 @@ namespace HomeWork04
         }
 
         // Вспомогательный приватный метод, который возвращает значение угла (в радианах), противолежащего стороне mainSide, с другими сторонами a и b.
-        private double GetAngle(double mainSide, double a, double b) => Math.Acos((a * a + b * b - mainSide * mainSide) / (2 * a * b));
+        private static double GetAngle(double mainSide, double a, double b) => Math.Acos((a * a + b * b - mainSide * mainSide) / (2 * a * b));
 
         //Возвращает значение угла, противолежащего стороне sideValue (в градусах/радианах, в зависимости от второго параметра).
         public double GetAngle(double sideValue, AngleType type = AngleType.Degrees)
