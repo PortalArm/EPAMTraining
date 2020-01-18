@@ -23,15 +23,20 @@ namespace HomeWork04
 
             A = a; B = b; C = c;
             Perimeter = A + B + C;
-            
+
             //Нахождение площади
             double halfp = Perimeter / 2;
             Area = Math.Sqrt(halfp * (halfp - A) * (halfp - B) * (halfp - C));
 
             //Отображение углов к соответствующим сторонам
-            _angles.Add(A, GetAngle(A, B, C));
-            _angles.Add(B, GetAngle(B, A, C));
-            _angles.Add(C, GetAngle(C, B, A));
+            if (!_angles.ContainsKey(A))
+                _angles.Add(A, GetAngle(A, B, C));
+
+            if (!_angles.ContainsKey(B))
+                _angles.Add(B, GetAngle(B, A, C));
+
+            if (!_angles.ContainsKey(C))
+                _angles.Add(C, GetAngle(C, B, A));
         }
 
         // Вспомогательный приватный метод, который возвращает значение угла (в радианах), противолежащего стороне mainSide, с другими сторонами a и b.
@@ -58,8 +63,8 @@ namespace HomeWork04
 Угол, противолежащий стороне (в радианах): {3,10:0.00000} {4,10:0.00000} {5,10:0.00000}
 Угол, противолежащий стороне (в градусах): {6,10:0.00000} {7,10:0.00000} {8,10:0.00000}
 Периметр: {9}
-Площадь: {10}", A, B, C, 
-            GetAngle(A, AngleType.Radians), GetAngle(B, AngleType.Radians), GetAngle(C, AngleType.Radians), 
+Площадь: {10}", A, B, C,
+            GetAngle(A, AngleType.Radians), GetAngle(B, AngleType.Radians), GetAngle(C, AngleType.Radians),
             GetAngle(A), GetAngle(B), GetAngle(C),
             Perimeter, Area);
     }
