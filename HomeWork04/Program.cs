@@ -21,7 +21,7 @@ namespace HomeWork04
             //Новый формат чтения. Еще не совсем протестирован, но вроде работает
             //_ = InputHandler.GetArrayInputFromConsole<double>("Введите 3 числа",
             //    expectedSize: 3,
-            //    constraints: w => !InputHandler.CatchAny(() => { triangle = new Triangle(w[0], w[1], w[2]); }, (e) => Console.WriteLine($"{e.GetType()}, {e.Message}")),
+            //    constraints: w => !InputHandler.HasException(() => { triangle = new Triangle(w[0], w[1], w[2]); }, (e) => Console.WriteLine($"{e.GetType()}, {e.Message}")),
             //    errorMessage: (e) => $"Вы ввели неверные числа ({e.Message})");
 
             //Старый формат
