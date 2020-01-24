@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerraLib", "Computerra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork04", "HomeWork04\HomeWork04.csproj", "{9704AD60-9407-4D01-8EA9-57057DDE2E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorPolynomial", "VectorPolynomial\VectorPolynomial.csproj", "{0C870BA3-5133-45D8-9B85-27FB1117B1F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork05", "HomeWork05\HomeWork05.csproj", "{0C870BA3-5133-45D8-9B85-27FB1117B1F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork06", "HomeWork06\HomeWork06.csproj", "{D5306656-155A-4F1C-9583-D588E6439856}"
 EndProject
