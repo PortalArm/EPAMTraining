@@ -22,11 +22,13 @@ namespace HomeWork04
                 throw new ArgumentException("Треугольник с введенными длинами должен существовать");
 
             A = a; B = b; C = c;
-            Perimeter = A + B + C;
+            Perimeter = checked(A + B + C);
 
             //Нахождение площади
             double halfp = Perimeter / 2;
-            Area = Math.Sqrt(halfp * (halfp - A) * (halfp - B) * (halfp - C));
+            Area = Math.Sqrt(checked(halfp * (halfp - A) * (halfp - B) * (halfp - C)));
+            if (double.IsInfinity(Perimeter) || double.IsInfinity(Area))
+                throw new OverflowException("Были введены слишком большие данные");
 
             //Отображение углов к соответствующим сторонам
             if (!_angles.ContainsKey(A))
@@ -40,7 +42,7 @@ namespace HomeWork04
         }
 
         // Вспомогательный приватный метод, который возвращает значение угла (в радианах), противолежащего стороне mainSide, с другими сторонами a и b.
-        private static double GetAngle(double mainSide, double a, double b) => Math.Acos((a * a + b * b - mainSide * mainSide) / (2 * a * b));
+        private static double GetAngle(double mainSide, double a, double b) => Math.Acos(checked((a * a + b * b - mainSide * mainSide) / (2 * a * b)));
 
         //Возвращает значение угла, противолежащего стороне sideValue (в градусах/радианах, в зависимости от второго параметра).
         public double GetAngle(double sideValue, AngleType type = AngleType.Degrees)
