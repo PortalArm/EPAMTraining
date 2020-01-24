@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace HomeWork04
+namespace InputHandlerNS
 {
     public static class InputHandler
     {
@@ -27,14 +27,14 @@ namespace HomeWork04
         }
         public static bool HasException(Action _try, Action<Exception> _catch = null, Action _finally = null) => HasException<Exception>(_try, _catch, _finally);
 
-        //TODO: Добавить метод для стопроцентного получения корректных данных из консоли
-        //      Добавить проверку элемента/ов при помощи анонимных методов
+        //TODO: Добавить метод для стопроцентного получения корректных данных из консоли (сделано)
+        //      Добавить проверку элемента/ов при помощи анонимных методов (сделано / частично)
 
         //Метод для получения входных данных, которые представляют массив определенного типа T, из консоли.
         public static T[] GetArrayInputFromConsole<T>(string message, int expectedSize = 0, Func<T, bool> constraint = null, Func<T[], bool> constraints = null, Func<Exception, string> errorMessage = null, char[] delimiter = null)
         {
             T[] output;
-            while (!GetArrayInputFromConsole(message, out output, expectedSize, constraint, constraints, errorMessage, delimiter));
+            while (!GetArrayInputFromConsole(message, out output, expectedSize, constraint, constraints, errorMessage, delimiter)) ;
             return output;
         }
 
@@ -53,7 +53,7 @@ namespace HomeWork04
 
             bool result = HasException(
                 //Если выходной тип enum, то применяем Enum.Parse
-                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)(isEnum?Enum.Parse(typeof(T), w):Convert.ChangeType(w, typeof(T)))).ToArray(),
+                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)(isEnum ? Enum.Parse(typeof(T), w) : Convert.ChangeType(w, typeof(T)))).ToArray(),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
@@ -67,7 +67,7 @@ namespace HomeWork04
             }
 
             //Если количество элементов, прошедших проверку, не равно общему количеству или не проходит частная проверка, то конец
-            if(outs.Where(constraint).Count() != outs.Count() || !constraints(outs))
+            if (outs.Where(constraint).Count() != outs.Count() || !constraints(outs))
             {
                 _logger("Входные данные не прошли внешнюю проверку");
                 return false;
@@ -81,7 +81,7 @@ namespace HomeWork04
         public static T GetInputFromConsole<T>(string message, Func<T, bool> constraint = null, Func<Exception, string> errorMessage = null)
         {
             T output;
-            while (!GetInputFromConsole(message, out output, constraint, errorMessage));
+            while (!GetInputFromConsole(message, out output, constraint, errorMessage)) ;
             return output;
         }
         //Метод для получения входных данных, которые представляют значение типа T, из консоли.
@@ -97,7 +97,7 @@ namespace HomeWork04
 
             bool result = HasException(
                 //Если выходной тип enum, то применяем Enum.Parse
-                _try: () => _out = (T) (isEnum?Enum.Parse(typeof(T), Console.ReadLine(), true):Convert.ChangeType(Console.ReadLine(), typeof(T))),
+                _try: () => _out = (T)(isEnum ? Enum.Parse(typeof(T), Console.ReadLine(), true) : Convert.ChangeType(Console.ReadLine(), typeof(T))),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
@@ -108,7 +108,7 @@ namespace HomeWork04
             {
                 _logger("Входные данные не прошли внешнюю проверку");
                 return false;
-            } 
+            }
 
             output = _out;
             return true;
