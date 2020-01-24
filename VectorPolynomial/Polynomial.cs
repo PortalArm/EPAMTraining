@@ -18,14 +18,19 @@ namespace VectorPolynomial
         public Polynomial(double[] values, bool suppress = false)
         {
             SuppressLoggerInvoke = suppress;
+            //Если в конструктор передан пустой массив или null, вызываем исключение
             if ((values?.Length ?? 0) == 0)
                 throw new ArgumentNullException("Многочлен не должен быть нулевой");
+
+            //Если был передан массив из одних нулей, вызываем исключение
             int i = values.Length - 1;
             for (; i >= 0; --i)
                 if (values[i] != 0)
                     break;
             if (i == -1)
                 throw new ArgumentNullException("Многочлен не должен быть нулевой");
+
+            //Если в массиве старшие члены равны нулю, степень многочлена урезается до первой степени с ненулевым значением
             if (i != values.Length - 1)
             {
                 Values = values.Take(i + 1).ToArray();
@@ -37,6 +42,7 @@ namespace VectorPolynomial
         }
 
         public static Polynomial operator -(Polynomial a, double b) => a + (-b);
+        //Перегрузка сложения полинома с числом
         public static Polynomial operator +(Polynomial a, double b)
         {
             double[] vals = (double[])a.Values.Clone();
@@ -45,6 +51,13 @@ namespace VectorPolynomial
             return new Polynomial(vals);
         }
         public static Polynomial operator +(double a, Polynomial b) => b + a;
+
+        /// <summary>
+        /// Перегрузка сложения
+        /// </summary>
+        /// <param name="a">Первый операнд</param>
+        /// <param name="b">Второй операнд</param>
+        /// <returns>Результат сложения</returns>
         public static Polynomial operator +(Polynomial a, Polynomial b)
         {
             double[] vals = new double[a.Degree > b.Degree ? a.Degree : b.Degree];
@@ -57,6 +70,12 @@ namespace VectorPolynomial
             return new Polynomial(vals);
         }
 
+        /// <summary>
+        /// Перегрузка операции умножения
+        /// </summary>
+        /// <param name="a">Первый операнд</param>
+        /// <param name="b">Второй операнд</param>
+        /// <returns>Результат умножения</returns>
         public static Polynomial operator *(Polynomial a, Polynomial b)
         {
             double[] vals = new double[a.Degree + b.Degree - 1];
@@ -67,11 +86,18 @@ namespace VectorPolynomial
 
             return new Polynomial(vals);
         }
-
+        /// <summary>
+        /// Перегрузка операции деления
+        /// </summary>
+        /// <param name="a">Первый операнд</param>
+        /// <param name="b">Второй операнд</param>
+        /// <returns>Результат деления</returns>
         public static Polynomial operator /(Polynomial a, Polynomial b)
         {
             var exc = new InvalidOperationException("Дробные полиномы не поддерживаются данным классом");
 
+            //Если максимальная степень первого полинома меньше максимальной степени второго полинома, то
+            //это результатом деления будет неправильная дробь, данный класс не поддерживает дробные полиномы
             if (a.Degree < b.Degree)
             {
                 exc.Data["remainder"] = a;
@@ -90,6 +116,9 @@ namespace VectorPolynomial
                     dividend[i+j] -= divMult * divisor[j];
                 vals[vals.Length - 1 - i] = divMult;
             }
+
+            //Если при делении остаток не равен нулю, то 
+            //частью результата деления будет неправильная дробь, данный класс не поддерживает дробные полиномы
             if (dividend.Where(v => v != 0).Any())
             {
                 exc.Data["quotient"] = new Polynomial(vals, true);
@@ -130,7 +159,7 @@ namespace VectorPolynomial
             if (power == 1)
                 return $"{(val > 0 ? "+" : "") + val}*x";
 
-            throw new Exception("Это не должно вызваться");
+            throw new Exception("Это по идее никогда не должно вызваться");
         }
     }
 }

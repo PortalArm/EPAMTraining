@@ -17,6 +17,8 @@ namespace VectorPolynomial
             Y = y;
             Z = z;
         }
+
+        //Различные перегрузки операций
         public static Vector operator +(Vector a, Vector b) => new Vector(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         public static Vector operator -(Vector a, Vector b) => new Vector(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
         public static Vector operator *(double b, Vector a) => a * b;
