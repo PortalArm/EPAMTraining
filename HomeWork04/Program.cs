@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Linq;
+using InputHandlerNS;
 namespace HomeWork04
 {
     class Program
@@ -17,7 +18,7 @@ namespace HomeWork04
             //Далее, если действительно введены три числа, во второй части условия проверяется, может ли быть создан треугольник с такими длинами. 
             //Если все проверки соблюдены, выводится объект (вся информация о нем, переопределен метод ToString)
 
-            _ = InputHandler.GetArrayInputFromConsole<double>("Введите 3 числа",
+            InputHandler.GetArrayInputFromConsole<double>("Введите 3 числа",
                 expectedSize: 3,
                 constraints: w => !InputHandler.HasException(() => { triangle = new Triangle(w[0], w[1], w[2]); }, (e) => Console.WriteLine($"{e.GetType()}, {e.Message}")),
                 errorMessage: (e) => $"Вы ввели неверные числа ({e.Message})");
@@ -32,7 +33,7 @@ namespace HomeWork04
             Qualification qual;
 
             //Новый формат чтения
-            name = InputHandler.GetArrayInputFromConsole<string>("Введите ваше ФИО", expectedSize: 3, errorMessage: _ => "Необходимо корректное ФИО");
+            name = InputHandler.GetArrayInputFromConsole<string>("Введите ваше ФИО через пробел в одной строке", expectedSize: 3, errorMessage: _ => "Необходимо корректное ФИО");
             string fio = string.Join(" ", name);
             year = InputHandler.GetInputFromConsole<int>("Введите год рождения", errorMessage: e => $"Введено некорректное значение ({e.Message})");
             gend = InputHandler.GetInputFromConsole<Gender>($"Введите пол ({string.Join(", ", Enum.GetNames(typeof(Gender)))})", errorMessage: e => $"Введено некорректное значение ({e.Message})");
@@ -53,8 +54,8 @@ namespace HomeWork04
                 case "file":
                     //Console.WriteLine("Введите имя файла");
                     StreamReader sr = null;
-                    _ = InputHandler.GetInputFromConsole<string>("Введите имя файла", s => !InputHandler.HasException(() => sr = new StreamReader(s), e => Console.WriteLine($"Попробуйте еще раз ({e.Message})")));
-                    
+                    InputHandler.GetInputFromConsole<string>("Введите имя файла (либо полный путь, либо относительный путь (abc.txt - случайный текст))", s => !InputHandler.HasException(() => sr = new StreamReader(s), e => Console.WriteLine($"Попробуйте еще раз ({e.Message})")));
+
                     ti = new TextInfo(sr);
                     sr.Close();
                     break;

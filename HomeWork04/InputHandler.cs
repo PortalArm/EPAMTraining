@@ -3,6 +3,15 @@ using System.Linq;
 
 namespace InputHandlerNS
 {
+
+    public static class Extension
+    {
+        public static bool IsNumeric(this string t)
+        {
+            double d;
+            return double.TryParse(t, out d);
+        }
+    }
     public static class InputHandler
     {
         private static Action<string> _logger = Console.WriteLine;
@@ -53,7 +62,7 @@ namespace InputHandlerNS
 
             bool result = HasException(
                 //Если выходной тип enum, то применяем Enum.Parse
-                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)(isEnum ? Enum.Parse(typeof(T), w) : Convert.ChangeType(w, typeof(T)))).ToArray(),
+                _try: () => outs = Console.ReadLine().Split(realDelim).Select(w => (T)(isEnum ? Enum.Parse(typeof(T), w.IsNumeric()?null:w, true) : Convert.ChangeType(w, typeof(T)))).ToArray(),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
@@ -95,9 +104,10 @@ namespace InputHandlerNS
             if (constraint == null)
                 constraint = e => true;
 
+            string input = Console.ReadLine();
             bool result = HasException(
                 //Если выходной тип enum, то применяем Enum.Parse
-                _try: () => _out = (T)(isEnum ? Enum.Parse(typeof(T), Console.ReadLine(), true) : Convert.ChangeType(Console.ReadLine(), typeof(T))),
+                _try: () => _out = (T)(isEnum ? Enum.Parse(typeof(T), input.IsNumeric() ? null : input, true) : Convert.ChangeType(input, typeof(T))),
                 _catch: (e) => _logger(errorMessage?.Invoke(e))
                 );
 
